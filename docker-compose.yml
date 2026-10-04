@@ -1,0 +1,25 @@
+services:
+  eventbooker:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: "8080"
+      DB_PATH: /data/eventbooker.db
+      ADMIN_TOKEN: eventbooker-admin
+      TOKEN_SECRET: dev-token-secret-change-me
+      GOMEMLIMIT: 450MiB
+    volumes:
+      - eventbooker-data:/data
+    ulimits:
+      nofile:
+        soft: 65535
+        hard: 65535
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/eventbooker", "ready"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 5s
+volumes:
+  eventbooker-data:

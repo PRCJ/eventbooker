@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: eventbooker
+    runtime: docker
+    plan: free
+    numInstances: 1
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health/ready
+    envVars:
+      - key: ADMIN_TOKEN
+        value: eventbooker-admin
+      - key: TOKEN_SECRET
+        value: dev-token-secret-change-me
+      - key: DB_PATH
+        value: /data/eventbooker.db
+      - key: GOMEMLIMIT
+        value: 450MiB
